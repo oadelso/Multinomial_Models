@@ -14,7 +14,8 @@ survey_df$Answer.Checking.Amount[survey_df$Answer.Checking.Amount == "Oct-49"] =
 
 
 #simplify Column Names
-colnames(survey_df) = c("age", "checking_amount","education", "sex", "race", "salary", "savings", "savings_amount")
+colnames(survey_df) = c("age", "checking_amount","education", "sex", "race", 
+                        "salary", "savings", "savings_amount")
 
 #get population data
 population_df = read.delim("pop_dist.tsv", stringsAsFactors=FALSE)
@@ -44,7 +45,8 @@ write.csv(population_df, "hw4_predicted_responses.csv")
 #get US-level responses
 #get the proportion of US citizens by salary response
 US_salary = tapply(population_df$N, population_df$salary, sum) / Total_US
-print(paste('The majority of adult US-residents have a monthly-salary range (in USD) of', names(which(US_salary==max(US_salary)))))
+print(paste('The majority of adult US-residents have a monthly-salary range (in USD) of', 
+            names(which(US_salary==max(US_salary)))))
 print('The distribution looks like:')
 US_salary
 
