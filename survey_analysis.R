@@ -1,9 +1,37 @@
+#!/usr/bin/Rscript
+'
+The following R script reads the csv file titled survey_data, and develops
+four multinomial models:
+1) salary_model
+2) checking_amount_model
+3) savings_model
+4) savings_amount_model
+
+These models, in turn, along with the tsv file entitled pop_dist are used to
+identify the the demographic-specific responses for all 256 combinations of 
+age, sex, gender, and education combinations; these results are saved in the
+workind directory in the file demographic_predicted_responses.
+
+These stratified responses are then used to provide the distribution of the US
+adult population which would provide specific responses to the following four
+survey questions:
+
+1. What is your monthly salary (if none, choose 0)? 
+2. Which range below (in US Dollars, USD) matches the balance in your checking account,
+(if no account, choose 0-9)? 
+3. Do you have a savings account? (yes/no)
+4. Which range below (in US Dollars, USD) matches the balance in your savings account,
+(if no account, choose 0-9)?
+'
+
+#removing memory
+rm(list = objects())
 #load libraries
 library(tidyverse)
 library(nnet)
 
 #get and clean survey data
-survey_df = read.csv("survey_two.csv", stringsAsFactors = FALSE)
+survey_df = read.csv("survey_data.csv", stringsAsFactors = FALSE)
 
 #choose only the relevant columns
 survey_df = survey_df[, 28:35]
@@ -40,7 +68,7 @@ population_df$savings_amount = predict(savings_amount_model, type = "class",
                                        newdata = population_df)
 
 #save the dataframe in working directory
-write.csv(population_df, "hw4_predicted_responses.csv")
+write.csv(population_df, "demographic_predicted_responses.csv")
 
 #get US-level responses
 #get the proportion of US citizens by salary response
